@@ -32,6 +32,7 @@ export default class WhereArtThou extends Component {
         </Text>
         <Text style={styles.instructions}>
           So many cool things
+          like dallas endless skills
         </Text>
         <Button
           backgroundColor="red"
