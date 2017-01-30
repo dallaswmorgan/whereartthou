@@ -16,9 +16,21 @@ import {
 
 export default class WhereArtThou extends Component {
 
-  getLocation(e) {
-    e.preventDefault();
-    getCurrentPosition(Alert.alert('position aquired'))
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log('POSITION HERE');
+        console.log(position);
+        var initialPosition = JSON.stringify(position);
+        this.setState({initialPosition});
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    // this.watchID = navigator.geolocation.watchPosition((position) => {
+    //   var lastPosition = JSON.stringify(position);
+    //   this.setState({lastPosition});
+    // });
   }
 
   render() {
@@ -27,6 +39,7 @@ export default class WhereArtThou extends Component {
         <Text style={styles.welcome}>
           We have an app!
         </Text>
+
         <Text style={styles.instructions}>
           Look at all this cool stuff we can do
         </Text>
@@ -36,7 +49,7 @@ export default class WhereArtThou extends Component {
         </Text>
         <Button
           backgroundColor="red"
-          onPress={this.getLocation}
+          onPress={() => Alert.alert(`${this.state.initialPosition}`)}
           title={"Press a button"}
           accessibilityLabel="This is a test button"
           />
