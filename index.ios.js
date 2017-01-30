@@ -24,7 +24,7 @@ export default class WhereArtThou extends Component {
         </Text>
         <Text style={styles.instructions}>
           So many cool things
-          like dallas big butt
+          like dallas endless skills
         </Text>
       </View>
     );
