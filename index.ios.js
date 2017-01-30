@@ -15,6 +15,12 @@ import {
 } from 'react-native';
 
 export default class WhereArtThou extends Component {
+
+  getLocation(e) {
+    e.preventDefault();
+    getCurrentPosition(Alert.alert('position aquired'))
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -29,7 +35,7 @@ export default class WhereArtThou extends Component {
         </Text>
         <Button
           backgroundColor="red"
-          onPress={() => Alert.alert('you pressed a button!')}
+          onPress={this.getLocation}
           title={"Press a button"}
           accessibilityLabel="This is a test button"
           />
