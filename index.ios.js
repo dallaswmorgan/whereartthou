@@ -9,7 +9,9 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Button,
+  Alert
 } from 'react-native';
 
 export default class WhereArtThou extends Component {
@@ -25,6 +27,12 @@ export default class WhereArtThou extends Component {
         <Text style={styles.instructions}>
           So many cool things
         </Text>
+        <Button
+          backgroundColor="red"
+          onPress={() => Alert.alert('you pressed a button!')}
+          title={"Press a button"}
+          accessibilityLabel="This is a test button"
+          />
       </View>
     );
   }
@@ -35,18 +43,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'orange',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    color: 'red'
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+  button: {
+    fontWeight: 'bold',
+    borderColor: 'black',
+    borderWidth: 2,
+  }
 });
 
 AppRegistry.registerComponent('WhereArtThou', () => WhereArtThou);
