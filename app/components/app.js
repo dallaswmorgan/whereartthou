@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
+  Image,
   Text,
   View,
   Button,
-  Alert
+  Alert,
+  TouchableHighlight
 } from 'react-native';
+
+import { styles } from '../styles/splash.js';
 
 export default class App extends Component {
 
@@ -26,20 +30,23 @@ export default class App extends Component {
       return (
         <View style={styles.container}>
           <Text style={styles.welcome}>
-            We have an app!
+            WhereOnEarth
           </Text>
 
           <Text style={styles.instructions}>
-            Look at all this cool stuff we can do
+            Know where you are{"\n"}
+            Know where you're not
           </Text>
-          <Text style={styles.instructions}>
-            So many cool things
-            like dallas endless skills
-          </Text>
-          <Button
-            onPress={() => Alert.alert(`Lat: ${this.state.initialPosition.coords.latitude} Long: ${this.state.initialPosition.coords.longitude}`)}
-            title={"Press a button"}
-            accessibilityLabel="This is a test b"/>
+          <Image
+            style={styles.splash}
+            source={require('../../images/logo.png')}
+          />
+          <TouchableHighlight
+            onPress={() => Alert.alert(`Lat: ${this.state.initialPosition.coords.latitude} Long: ${this.state.initialPosition.coords.longitude}`)}>
+            <Text style={styles.button}>
+              Enter
+            </Text>
+          </TouchableHighlight>
         </View>
       );
     } else {
@@ -50,30 +57,4 @@ export default class App extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    height: 500,
-    width: 400,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    backgroundColor: 'orange',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: 'red'
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  button: {
-    fontWeight: 'bold',
-    borderColor: 'black',
-    borderWidth: 2,
-  }
-});
-
-AppRegistry.registerComponent('WhereArtThou', () => WhereArtThou);
+AppRegistry.registerComponent('WhereArtThou', () => App);
