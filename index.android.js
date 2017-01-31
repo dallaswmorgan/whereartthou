@@ -9,25 +9,58 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Button,
+  Alert
 } from 'react-native';
 
 export default class WhereArtThou extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log('POSITION HERE');
+        console.log(position);
+        var initialPosition = position;
+        this.setState({initialPosition});
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
+    // this.watchID = navigator.geolocation.watchPosition((position) => {
+    //   var lastPosition = JSON.stringify(position);
+    //   this.setState({lastPosition});
+    // });
+  }
+
+  render() {
+    if (this.state) {
+      console.log(this.state.initialPosition);
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>
+            We have an app!
+          </Text>
+
+          <Text style={styles.instructions}>
+            Look at all this cool stuff we can do
+          </Text>
+          <Text style={styles.instructions}>
+            So many cool things
+            like dallas endless skills
+          </Text>
+          <Button
+            backgroundColor="red"
+            onPress={() => Alert.alert(`Lat: ${this.state.initialPosition.coords.latitude} Long: ${this.state.initialPosition.coords.longitude}`)}
+            title={"Press a button"}
+            accessibilityLabel="This is a test b"/>
+        </View>
+      );
+    } else {
+      return(
+        <View></View>
+      );
+    }
   }
 }
 
@@ -36,18 +69,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'orange',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    color: 'red'
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+  button: {
+    fontWeight: 'bold',
+    borderColor: 'black',
+    borderWidth: 2,
+  }
 });
 
 AppRegistry.registerComponent('WhereArtThou', () => WhereArtThou);

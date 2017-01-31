@@ -19,9 +19,7 @@ export default class WhereArtThou extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log('POSITION HERE');
-        console.log(position);
-        var initialPosition = JSON.stringify(position);
+        var initialPosition = position;
         this.setState({initialPosition});
       },
       (error) => alert(error.message),
@@ -34,27 +32,33 @@ export default class WhereArtThou extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          We have an app!
-        </Text>
+    if (this.state) {
+      console.log(this.state.initialPosition);
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>
+            We have an app!
+          </Text>
 
-        <Text style={styles.instructions}>
-          Look at all this cool stuff we can do
-        </Text>
-        <Text style={styles.instructions}>
-          So many cool things
-          like dallas endless skills
-        </Text>
-        <Button
-          backgroundColor="red"
-          onPress={() => Alert.alert(`${this.state.initialPosition}`)}
-          title={"Press a button"}
-          accessibilityLabel="This is a test button"
-          />
-      </View>
-    );
+          <Text style={styles.instructions}>
+            Look at all this cool stuff we can do
+          </Text>
+          <Text style={styles.instructions}>
+            So many cool things
+            like dallas endless skills
+          </Text>
+          <Button
+            backgroundColor="red"
+            onPress={() => Alert.alert(`Lat: ${this.state.initialPosition.coords.latitude} Long: ${this.state.initialPosition.coords.longitude}`)}
+            title={"Press a button"}
+            accessibilityLabel="This is a test b"/>
+        </View>
+      );
+    } else {
+      return(
+        <View></View>
+      );
+    }
   }
 }
 
