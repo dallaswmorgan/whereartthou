@@ -5,18 +5,27 @@
  */
 
 import React, { Component } from 'react';
-import { AppRegistry, View} from 'react-native';
+import { AppRegistry, StyleSheet, NavigatorIOS} from 'react-native';
 import App from './app/components/app.js';
 import Map from './app/components/map.js';
 
 export default class WhereArtThou extends Component {
   render(){
     return (
-      <View>
-        < Map />
-      </View>
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          title: 'WhereOnEarth',
+          component: App
+        }}/>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1
+  }
+});
 
 AppRegistry.registerComponent('WhereArtThou', () => WhereArtThou);

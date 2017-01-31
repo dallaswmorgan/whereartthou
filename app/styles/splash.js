@@ -1,23 +1,26 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const {height, width} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   container: {
-    height: 500,
-    width: 400,
+    height: height,
+    width: width,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#2F4858',
   },
   welcome: {
-    fontSize: 24,
+    fontSize: 30,
     fontFamily: 'Baskerville-Bold',
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 80,
+    marginTop: 100,
     color: '#55DDE0'
   },
   instructions: {
+    fontSize: 18,
     textAlign: 'center',
     fontFamily: 'Baskerville',
     color: 'white',
@@ -25,12 +28,14 @@ export const styles = StyleSheet.create({
     marginBottom: 5
   },
   splash: {
-    height: 200,
-    width: 220
+    marginTop: 15,
+    height: 250,
+    width: 260
   },
   button: {
+    fontSize: 14,
     color: 'white',
-    marginTop: 10,
+    marginTop: 50,
     fontFamily: 'Baskerville',
   }
 });

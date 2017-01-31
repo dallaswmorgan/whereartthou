@@ -1,60 +1,53 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Image,
   Text,
   View,
-  Button,
   Alert,
-  TouchableHighlight
+  TouchableHighlight,
+  Dimensions
 } from 'react-native';
 
 import { styles } from '../styles/splash.js';
 
-export default class App extends Component {
+import Map from './map.js';
 
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      (initialPosition) => {
-        this.setState({initialPosition});
-      },
-      (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
+export default class App extends Component {
+  constructor(props){
+    super(props);
+
+    this.enter = this.enter.bind(this);
   }
 
+  enter(){
+    this.props.navigator.replace({
+      component: Map
+    });
+  }
 
   render() {
-    if (this.state) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            WhereOnEarth
-          </Text>
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          WhereOnEarth
+        </Text>
 
-          <Text style={styles.instructions}>
-            Know where you are{"\n"}
-            Know where you're not
+        <Text style={styles.instructions}>
+          Know where you are{"\n"}
+          Know where you're not
+        </Text>
+        <Image
+          style={styles.splash}
+          source={require('../../images/logo.png')}
+        />
+        <TouchableHighlight
+          onPress={() => this.enter()}>
+          <Text style={styles.button}>
+            Enter
           </Text>
-          <Image
-            style={styles.splash}
-            source={require('../../images/logo.png')}
-          />
-          <TouchableHighlight
-            onPress={() => Alert.alert(`Lat: ${this.state.initialPosition.coords.latitude} Long: ${this.state.initialPosition.coords.longitude}`)}>
-            <Text style={styles.button}>
-              Enter
-            </Text>
-          </TouchableHighlight>
-        </View>
-      );
-    } else {
-      return(
-        <View></View>
-      );
-    }
+        </TouchableHighlight>
+      </View>
+    );
   }
 }
-
-AppRegistry.registerComponent('WhereArtThou', () => App);

@@ -26,7 +26,7 @@ export default class Map extends Component {
   render() {
       return (
         <View style={styles.container}>
-
+          <Text>helllo</Text>
           <MapView
             style={styles.map}
             initialRegion={{
@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    height: 400,
+    width: 300,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
@@ -61,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('WhereArtThou', () => WhereArtThou);
+AppRegistry.registerComponent('Map', () => Map);
