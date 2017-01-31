@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
+  Image,
   Text,
   View,
   Button,
-  Alert
+  Alert,
+  TouchableHighlight
 } from 'react-native';
 
 export default class App extends Component {
@@ -26,20 +28,23 @@ export default class App extends Component {
       return (
         <View style={styles.container}>
           <Text style={styles.welcome}>
-            We have an app!
+            WhereOnEarth
           </Text>
 
           <Text style={styles.instructions}>
-            Look at all this cool stuff we can do
+            Know where you are{"\n"}
+            Know where you're not
           </Text>
-          <Text style={styles.instructions}>
-            So many cool things
-            like dallas endless skills
-          </Text>
-          <Button
-            onPress={() => Alert.alert(`Lat: ${this.state.initialPosition.coords.latitude} Long: ${this.state.initialPosition.coords.longitude}`)}
-            title={"Press a button"}
-            accessibilityLabel="This is a test b"/>
+          <Image
+            style={styles.splash}
+            source={require('../../images/logo.png')}
+          />
+          <TouchableHighlight
+            onPress={() => Alert.alert(`Lat: ${this.state.initialPosition.coords.latitude} Long: ${this.state.initialPosition.coords.longitude}`)}>
+            <Text style={styles.button}>
+              Enter
+            </Text>
+          </TouchableHighlight>
         </View>
       );
     } else {
@@ -54,26 +59,35 @@ const styles = StyleSheet.create({
   container: {
     height: 500,
     width: 400,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    backgroundColor: 'orange',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#2F4858',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 24,
+    fontFamily: 'Baskerville-Bold',
+    fontWeight: 'bold',
     textAlign: 'center',
-    margin: 10,
-    color: 'red'
+    marginTop: 80,
+    color: '#55DDE0'
   },
   instructions: {
     textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    fontFamily: 'Baskerville',
+    color: 'white',
+    marginTop: 20,
+    marginBottom: 5
+  },
+  splash: {
+    height: 200,
+    width: 220
   },
   button: {
-    fontWeight: 'bold',
-    borderColor: 'black',
-    borderWidth: 2,
+    color: 'white',
+    marginTop: 10,
+    fontFamily: 'Baskerville',
   }
 });
 
-AppRegistry.registerComponent('WhereArtThou', () => WhereArtThou);
+AppRegistry.registerComponent('WhereArtThou', () => App);
