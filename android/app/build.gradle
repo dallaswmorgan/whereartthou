@@ -126,6 +126,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-geo-fencing')
     compile project(':react-native-full-screen')
     compile project(':react-native-maps')
     compile fileTree(dir: "libs", include: ["*.jar"])
