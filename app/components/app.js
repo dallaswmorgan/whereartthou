@@ -16,6 +16,9 @@ import MapParent from './map_parent.js';
 export default class App extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      position: ''
+    }
 
     this.enter = this.enter.bind(this);
   }
