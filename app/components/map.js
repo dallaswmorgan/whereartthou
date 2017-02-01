@@ -26,7 +26,6 @@ export default class Map extends Component {
   render() {
       return (
         <View style={styles.container}>
-          <Text>helllo</Text>
           <MapView
             style={styles.map}
             initialRegion={{
