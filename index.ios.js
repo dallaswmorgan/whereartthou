@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, NavigatorIOS} from 'react-native';
 import App from './app/components/app.js';
 import Map from './app/components/map.js';
+import { styles } from './app/styles/index_style.js';
 
 export default class WhereArtThou extends Component {
   render(){
@@ -21,11 +22,5 @@ export default class WhereArtThou extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container:{
-    flex:1
-  }
-});
 
 AppRegistry.registerComponent('WhereArtThou', () => WhereArtThou);

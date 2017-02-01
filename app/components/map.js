@@ -182,8 +182,10 @@ PolygonCreator.propTypes = {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    width: width - 10,
+    height: 300,
+    marginLeft: 5,
+    marginTop: 100
   },
   map: {
     ...StyleSheet.absoluteFillObject,

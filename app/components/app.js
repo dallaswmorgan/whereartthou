@@ -9,9 +9,9 @@ import {
   Dimensions
 } from 'react-native';
 
-import { styles } from '../styles/splash.js';
+import { styles } from '../styles/splash_style.js';
 
-import Map from './map.js';
+import MapParent from './map_parent.js';
 
 export default class App extends Component {
   constructor(props){
@@ -22,7 +22,7 @@ export default class App extends Component {
 
   enter(){
     this.props.navigator.replace({
-      component: Map
+      component: MapParent
     });
   }
 
