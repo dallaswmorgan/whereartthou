@@ -34,8 +34,7 @@ export default class App extends Component {
         </Text>
 
         <Text style={styles.instructions}>
-          Know where you are{"\n"}
-          Know where you're not
+          {"Know where you are\nKnow where you're not"}
         </Text>
         <Image
           style={styles.splash}
