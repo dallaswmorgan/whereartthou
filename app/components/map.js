@@ -13,22 +13,22 @@ import { styles } from '../styles/map_style.js';
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
 
 class PolygonCreator extends React.Component {
   constructor(props) {
     super(props);
+    this.latitude = props.map.position.coords.latitude;
+    this.longitude = props.map.position.coords.longitude;
+    this.latDelta = 0.0922;
+    this.lngDelta = this.latDelta * ASPECT_RATIO;
 
     this.state = {
       region: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+        latitude: this.latitude,
+        longitude: this.longitude,
+        latitudeDelta: this.latDelta,
+        longitudeDelta: this.lngDelta,
       },
       polygons: [],
       editing: null,

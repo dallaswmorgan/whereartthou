@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-// import { styles } from '../styles/form_style.js';
+import { styles } from '../styles/form_style.js';
 
 export default class Form extends Component {
   constructor(props){
@@ -15,8 +15,6 @@ export default class Form extends Component {
   }
 
   render() {
-    let buttonColor = this.buttonColor;
-    console.log(this.props);
     return(
       <View style={styles.container}>
         <TouchableHighlight
@@ -46,25 +44,3 @@ export default class Form extends Component {
 //     Alert Me
 //   </Text>
 // </TouchableHighlight>
-
-const styles = StyleSheet.create({
-  container: {
-    width: 70
-  },
-  text: {
-
-  },
-  buttonContainer: {
-
-  },
-  trueButton: {
-    width: 70,
-    backgroundColor: 'green',
-    marginTop: 5
-  },
-  falseButton: {
-    width: 70,
-    backgroundColor: 'gray',
-    marginTop: 5
-  }
-});
