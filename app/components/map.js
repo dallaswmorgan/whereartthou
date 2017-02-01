@@ -3,6 +3,11 @@ import {
   Text,
   View,
   Alert
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import MapView from 'react-native-maps';
 
