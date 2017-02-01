@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     width: 260
   },
   button: {
-    fontSize: 14,
+    fontSize: 18,
     color: 'white',
     marginTop: 50,
     fontFamily: 'Baskerville',
