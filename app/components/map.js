@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
   Text,
   View,
-  Button,
   Alert
 } from 'react-native';
 import MapView from 'react-native-maps';
 
+import { styles } from '../styles/map_style.js';
 
 export default class Map extends Component {
 
@@ -45,26 +43,3 @@ export default class Map extends Component {
 
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: 400,
-    width: 300,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-});
-
-AppRegistry.registerComponent('Map', () => Map);
