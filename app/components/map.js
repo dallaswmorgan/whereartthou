@@ -9,6 +9,10 @@ import MapView from 'react-native-maps';
 import { styles } from '../styles/map_style.js';
 
 export default class Map extends Component {
+  constructor(props){
+    super(props);
+
+  }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
