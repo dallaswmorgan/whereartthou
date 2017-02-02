@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import Map from './map.js';
 import Form from './form.js';
+import GeoFencing from 'react-native-geo-fencing';
 
 import { styles } from '../styles/map_parent_style.js';
 
@@ -25,12 +26,14 @@ export default class MapParent extends Component {
       },
       polygons: [],
       editing: null,
+      geoFences: []
     };
     this.switchAlert = this.switchAlert.bind(this);
     this.switchOnEnter = this.switchOnEnter.bind(this);
     this.switchOnExit = this.switchOnExit.bind(this);
     this.finish = this.finish.bind(this);
     this.onPress = this.onPress.bind(this);
+    this.handleWatchSubmit = this.handleWatchSubmit.bind(this);
   }
 
 
@@ -64,6 +67,17 @@ export default class MapParent extends Component {
     this.setState({
       onExit: !this.state.onExit
     });
+  }
+
+  handleWatchSubmit() {
+    let geoFences = [];
+    this.state.polygons.forEach(polygon => {
+      const fencePolygon = polygon.coordinates.map( coord => {
+        return({ lat: coord.latitude, lng: coord.longitude })
+      })
+      geoFences.push(fencePolygon);
+    })
+    this.setState({ geoFences })
   }
 
   finish() {
