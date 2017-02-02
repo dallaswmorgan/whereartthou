@@ -13,7 +13,6 @@ import { styles } from '../styles/map_style.js';
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
-let id = 0;
 
 class PolygonCreator extends React.Component {
   constructor(props) {
@@ -22,94 +21,21 @@ class PolygonCreator extends React.Component {
     this.longitude = props.map.position.coords.longitude;
     this.latDelta = 0.0922;
     this.lngDelta = this.latDelta * ASPECT_RATIO;
-
-    this.state = {
-      region: {
-        latitude: this.latitude,
-        longitude: this.longitude,
-        latitudeDelta: this.latDelta,
-        longitudeDelta: this.lngDelta,
-      },
-      polygons: [],
-      editing: null,
-      creatingHole: false,
+    this.region = {
+      latitude: this.latitude,
+      longitude: this.longitude,
+      latitudeDelta: this.latDelta,
+      longitudeDelta: this.lngDelta
     };
+    this.polygons = props.polygons;
+    this.editing = props.editing;
   }
 
-  finish() {
-    const { polygons, editing } = this.state;
-    this.setState({
-      polygons: [...polygons, editing],
-      editing: null,
-      creatingHole: false,
-    });
-  }
-
-  createHole() {
-    const { editing, creatingHole } = this.state;
-    if (!creatingHole) {
-      this.setState({
-        creatingHole: true,
-        editing: {
-          ...editing,
-          holes: [
-            ...editing.holes,
-            [],
-          ],
-        },
-      });
-    } else {
-      const holes = [...editing.holes];
-      if (holes[holes.length - 1].length === 0) {
-        holes.pop();
-        this.setState({
-          editing: {
-            ...editing,
-            holes,
-          },
-        });
-      }
-      this.setState({ creatingHole: false });
-    }
-  }
-
-  onPress(e) {
-    const { editing, creatingHole } = this.state;
-    if (!editing) {
-      this.setState({
-        editing: {
-          id: id++,
-          coordinates: [e.nativeEvent.coordinate],
-          holes: [],
-        },
-      });
-    } else if (!creatingHole) {
-      this.setState({
-        editing: {
-          ...editing,
-          coordinates: [
-            ...editing.coordinates,
-            e.nativeEvent.coordinate,
-          ],
-        },
-      });
-    } else {
-      const holes = [...editing.holes];
-      holes[holes.length - 1] = [
-        ...holes[holes.length - 1],
-        e.nativeEvent.coordinate,
-      ];
-      this.setState({
-        editing: {
-          ...editing,
-          id: id++, // keep incrementing id to trigger display refresh
-          coordinates: [
-            ...editing.coordinates,
-          ],
-          holes,
-        },
-      });
-    }
+  componentWillReceiveProps(newProps){
+    if (newProps.editing !== this.editing)
+      this.editing = newProps.editing;
+    if (this.polygons !== newProps.polygons)
+      this.polygons = newProps.polygons;
   }
 
   render() {
@@ -117,36 +43,34 @@ class PolygonCreator extends React.Component {
       scrollEnabled: true,
     };
 
-    if (this.state.editing) {
+    if (this.editing) {
       mapOptions.scrollEnabled = false;
-      mapOptions.onPanDrag = e => this.onPress(e);
+      mapOptions.onPanDrag = e => this.props.onPress(e);
     }
-
+    console.log(this.polygons);
     return (
       <View style={styles.container}>
         <MapView
           provider={this.props.provider}
           style={styles.map}
           mapType={MapView.MAP_TYPES.HYBRID}
-          initialRegion={this.state.region}
-          onPress={e => this.onPress(e)}
+          initialRegion={this.region}
+          onPress={e => this.props.onPress(e)}
           {...mapOptions}
         >
-          {this.state.polygons.map(polygon => (
+          {this.polygons.map(polygon => (
             <MapView.Polygon
               key={polygon.id}
               coordinates={polygon.coordinates}
-              holes={polygon.holes}
               strokeColor="#F00"
               fillColor="rgba(255,0,0,0.5)"
               strokeWidth={1}
             />
           ))}
-          {this.state.editing && (
+          {this.editing && (
             <MapView.Polygon
-              key={this.state.editing.id}
-              coordinates={this.state.editing.coordinates}
-              holes={this.state.editing.holes}
+              key={this.editing.id}
+              coordinates={this.editing.coordinates}
               strokeColor="#000"
               fillColor="rgba(255,0,0,0.5)"
               strokeWidth={1}
@@ -154,17 +78,9 @@ class PolygonCreator extends React.Component {
           )}
         </MapView>
         <View style={styles.buttonContainer}>
-          {this.state.editing && (
+          {this.editing && (
             <TouchableOpacity
-              onPress={() => this.createHole()}
-              style={[styles.bubble, styles.button]}
-            >
-              <Text>{this.state.creatingHole ? 'Finish Hole' : 'Create Hole'}</Text>
-            </TouchableOpacity>
-          )}
-          {this.state.editing && (
-            <TouchableOpacity
-              onPress={() => this.finish()}
+              onPress={() => this.props.finish()}
               style={[styles.bubble, styles.button]}
             >
               <Text>Finish</Text>

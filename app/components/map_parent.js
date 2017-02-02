@@ -9,6 +9,8 @@ import Form from './form.js';
 
 import { styles } from '../styles/map_parent_style.js';
 
+let id = 0;
+
 export default class MapParent extends Component {
   constructor(props){
     super(props);
@@ -20,33 +22,29 @@ export default class MapParent extends Component {
       },
       map: {
         position: {},
-        region: {
-          latitude: '',
-          longitude: '',
-          latDelta: '',
-          longDelta: ''
-        },
-        polygons: [],
-        editing: null,
-        creatingHole: false
-      }
+      },
+      polygons: [],
+      editing: null,
     };
     this.switchAlert = this.switchAlert.bind(this);
     this.switchOnEnter = this.switchOnEnter.bind(this);
     this.switchOnExit = this.switchOnExit.bind(this);
+    this.finish = this.finish.bind(this);
+    this.onPress = this.onPress.bind(this);
   }
 
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
-       (position) => {
-         this.setState({
-           map:{
-             position
-           }});
-       },
-       (error) => alert(error.message),
-       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      (position) => {
+        this.setState({
+          map: {
+            position
+          },
+        });
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
      );
    }
 
@@ -68,6 +66,38 @@ export default class MapParent extends Component {
     });
   }
 
+  finish() {
+    const { polygons, editing } = this.state;
+    this.setState({
+      polygons: [...polygons, editing],
+      editing: null,
+    });
+  }
+
+  onPress(e) {
+    const editing = this.state.editing;
+    let coordinate = e.nativeEvent.coordinate;
+        if (!editing) {
+      this.setState({
+        editing: {
+          id: id++,
+          coordinates: [coordinate]
+        },
+      }
+    );
+    } else {
+      this.setState({
+        editing: {
+          ...editing,
+          coordinates: [
+            ...editing.coordinates,
+            coordinate
+          ],
+        }
+      });
+    }
+  }
+
   render() {
     if (Object.keys(this.state.map.position).length > 0) {
       return(
@@ -75,8 +105,14 @@ export default class MapParent extends Component {
           <Form switchOnEnter={this.switchOnEnter}
                 switchOnExit={this.switchOnExit}
                 state={this.state}
-                />
-              <Map map={this.state.map}/>
+            />
+          <Map finish={this.finish}
+            onPress={this.onPress}
+            map={this.state.map}
+            polygons={this.state.polygons}
+            region={this.state.region}
+            editing={this.state.editing}
+            />
         </View>
       );
     } else {
