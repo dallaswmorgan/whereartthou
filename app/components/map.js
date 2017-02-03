@@ -5,6 +5,7 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  TouchableHighlight
 } from 'react-native';
 
 import MapView from 'react-native-maps';
@@ -47,7 +48,7 @@ class PolygonCreator extends React.Component {
       mapOptions.scrollEnabled = false;
       mapOptions.onPanDrag = e => this.props.onPress(e);
     }
-    console.log(this.polygons);
+
     return (
       <View style={styles.container}>
         <MapView

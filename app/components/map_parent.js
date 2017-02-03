@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import Map from './map.js';
 import Form from './form.js';
+import TrackFrom from './track_form.js';
 import GeoFencing from 'react-native-geo-fencing';
 
 import { styles } from '../styles/map_parent_style.js';
@@ -127,6 +128,7 @@ export default class MapParent extends Component {
             region={this.state.region}
             editing={this.state.editing}
             />
+          <TrackFrom />
         </View>
       );
     } else {

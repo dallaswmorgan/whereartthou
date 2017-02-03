@@ -8,6 +8,10 @@ export const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     width: width - 10,
     height: 300,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: 5,
     marginTop: 100
   },
@@ -32,7 +36,8 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginVertical: 20,
+    marginRight: 300,
+    marginBottom: 200,
     backgroundColor: 'transparent',
-  },
+  }
 });
