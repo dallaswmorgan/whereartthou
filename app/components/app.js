@@ -41,6 +41,7 @@ export default class App extends Component {
           source={require('../../images/logo.png')}
         />
         <TouchableHighlight
+          underlayColor= '#2F4858'
           onPress={() => this.enter()}>
           <Text style={styles.button}>
             Enter

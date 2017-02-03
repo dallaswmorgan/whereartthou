@@ -17,7 +17,9 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 100,
-    color: '#55DDE0'
+    color: '#55DDE0',
+    textShadowColor: 'black',
+    textShadowOffset: {width: 3, height: 3}
   },
   instructions: {
     fontSize: 18,
@@ -25,7 +27,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Baskerville',
     color: 'white',
     marginTop: 20,
-    marginBottom: 5
+    marginBottom: 5,
   },
   splash: {
     marginTop: 15,
@@ -33,7 +35,7 @@ export const styles = StyleSheet.create({
     width: 260
   },
   button: {
-    fontSize: 18,
+    fontSize: 26,
     color: 'white',
     marginTop: 50,
     fontFamily: 'Baskerville',
