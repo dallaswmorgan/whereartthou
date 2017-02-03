@@ -95,7 +95,6 @@ export default class MapParent extends Component {
         geoFences.push(fencePolygon);
       })
       this.setState({ geoFences });
-      console.log('active');
     }
   }
 
