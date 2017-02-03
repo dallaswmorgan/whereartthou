@@ -17,7 +17,7 @@ export default class TrackForm extends Component {
       <View style={styles.container}>
         <TouchableHighlight
           underlayColor='white'
-          onPress={() => this.props.track()}>
+          onPress={() => this.props.handleWatchSubmit()}>
           <Text style={styles.trackButton}>
             Start Tracking
           </Text>
