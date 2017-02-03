@@ -27,7 +27,8 @@ export default class MapParent extends Component {
       },
       polygons: [],
       editing: null,
-      geoFences: []
+      geoFences: [],
+      lastPosition: null
     };
     this.switchAlert = this.switchAlert.bind(this);
     this.switchOnEnter = this.switchOnEnter.bind(this);
@@ -50,6 +51,16 @@ export default class MapParent extends Component {
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
      );
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      const lastPosition = JSON.stringify(position);
+      let that = this;
+      this.state.geoFences.forEach( fence => {
+        if (that.containsLocation(lastPosition, fence)) {
+          Alert.alert('you have entered a geofence');
+        }
+      })
+      this.setState({lastPosition});
+    });
    }
 
   switchAlert(){
@@ -135,16 +146,7 @@ export default class MapParent extends Component {
   }
 
   render() {
-    if (this.state.geoFences[0]) {
-      console.log(GeoFencing);
-      console.log('this should say true if you made a polygon around treasure island');
-      let point = {lat: 37.825167, lng: -122.373791};
-      console.log(this.containsLocation(point, this.state.geoFences[0]));
-      console.log(this.state.geoFences[0]);
-      debugger
-      console.log(GeoFencing);
-    }
-
+    debugger
     if (Object.keys(this.state.map.position).length > 0) {
       return(
         <View style={styles.container}>
@@ -158,8 +160,10 @@ export default class MapParent extends Component {
             polygons={this.state.polygons}
             region={this.state.region}
             editing={this.state.editing}
+            lastPosition={this.state.lastPosition}
             />
           <TrackForm
+            lastPosition={this.state.lastPosition}
             handleWatchSubmit={this.handleWatchSubmit}/>
         </View>
       );
