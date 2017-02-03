@@ -36,6 +36,7 @@ export default class MapParent extends Component {
     this.finish = this.finish.bind(this);
     this.onPress = this.onPress.bind(this);
     this.handleWatchSubmit = this.handleWatchSubmit.bind(this);
+    this.submittable = this.submittable.bind(this);
   }
 
 
@@ -65,33 +66,48 @@ export default class MapParent extends Component {
 
   switchAlert(){
     this.setState({
-      alertMe: !this.props.alertMe
+      form: {
+        alertMe: !this.state.form.alertMe,
+        onEnter: this.state.form.onEnter,
+        onExit: this.state.form.onExit
+      }
     });
   }
 
   switchOnEnter(){
     this.setState({
-      onEnter: !this.state.onEnter
+      form: {
+        alertMe: this.state.form.alertMe,
+        onEnter: !this.state.form.onEnter,
+        onExit: this.state.form.onExit
+      }
     });
   }
 
   switchOnExit(){
     this.setState({
-      onExit: !this.state.onExit
+      form: {
+        alertMe: this.state.form.alertMe,
+        onEnter: this.state.form.onEnter,
+        onExit: !this.state.form.onExit
+      }
     });
   }
 
   handleWatchSubmit() {
-    let geoFences = [];
-    this.state.polygons.forEach(polygon => {
-      let fencePolygon = polygon.coordinates.map( coord => {
-        return({ lat: coord.latitude, lng: coord.longitude })
+    if (this.submittable()) {
+      let geoFences = [];
+      this.state.polygons.forEach(polygon => {
+        let fencePolygon = polygon.coordinates.map( coord => {
+          return({ lat: coord.latitude, lng: coord.longitude })
+        })
+        const first = this.state.polygons[0].coordinates[0];
+        fencePolygon.push({lat: first.latitude, lng: first.longitude});
+        geoFences.push(fencePolygon);
       })
-      const first = this.state.polygons[0].coordinates[0];
-      fencePolygon.push({lat: first.latitude, lng: first.longitude});
-      geoFences.push(fencePolygon);
-    })
-    this.setState({ geoFences })
+      this.setState({ geoFences });
+      console.log('active');
+    }
   }
 
   finish() {
@@ -145,15 +161,33 @@ export default class MapParent extends Component {
     }
   }
 
+  submittable(){
+    if (this.state.form.onEnter === false && this.state.form.onExit === false)
+      return false;
+    if (this.state.polygons.length === 0)
+      return false;
+    return true;
+  }
+
   render() {
+<<<<<<< HEAD
     debugger
+=======
+    if (this.state.geoFences[0]) {
+      let point = {lat: 37.825167, lng: -122.373791};
+      console.log(this.containsLocation(point, this.state.geoFences[0]));
+    }
+
+>>>>>>> 3fd85595235c1b693d31208ea99e9309110324af
     if (Object.keys(this.state.map.position).length > 0) {
       return(
         <View style={styles.container}>
-          <Form switchOnEnter={this.switchOnEnter}
+          <Form style={styles.contents}
+                switchOnEnter={this.switchOnEnter}
                 switchOnExit={this.switchOnExit}
                 state={this.state}
             />
+<<<<<<< HEAD
           <Map finish={this.finish}
             onPress={this.onPress}
             map={this.state.map}
@@ -165,6 +199,19 @@ export default class MapParent extends Component {
           <TrackForm
             lastPosition={this.state.lastPosition}
             handleWatchSubmit={this.handleWatchSubmit}/>
+=======
+          <Map style={styles.contents}
+              finish={this.finish}
+              onPress={this.onPress}
+              map={this.state.map}
+              polygons={this.state.polygons}
+              region={this.state.region}
+              editing={this.state.editing}
+            />
+          <TrackForm style={styles.contents}
+              handleWatchSubmit={this.handleWatchSubmit}
+              submittable={this.submittable}/>
+>>>>>>> 3fd85595235c1b693d31208ea99e9309110324af
         </View>
       );
     } else {

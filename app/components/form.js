@@ -17,20 +17,25 @@ export default class Form extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <TouchableHighlight
-          underlayColor= 'white'
-          onPress={() => this.props.switchOnEnter()}>
-          <Text style={this.props.state.onEnter ? styles.trueButton : styles.falseButton}>
-            On Enter
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-         underlayColor= 'white'
-          onPress={() => this.props.switchOnExit()}>
-          <Text style={this.props.state.onExit? styles.trueButton : styles.falseButton}>
-            On Exit
-          </Text>
-        </TouchableHighlight>
+        <Text style={styles.label}>
+          Select when you would like to be notified
+        </Text>
+        <View style={styles.buttons}>
+          <TouchableHighlight
+            underlayColor= '#2F4858'
+            onPress={() => this.props.switchOnEnter()}>
+            <Text style={this.props.state.form.onEnter ? styles.trueButton : styles.falseButton}>
+              On Enter
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+           underlayColor= '#2F4858'
+            onPress={() => this.props.switchOnExit()}>
+            <Text style={this.props.state.form.onExit ? styles.trueButton : styles.falseButton}>
+              On Exit
+            </Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
