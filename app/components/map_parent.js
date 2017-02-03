@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import Map from './map.js';
 import Form from './form.js';
-import TrackFrom from './track_form.js';
+import TrackForm from './track_form.js';
 import GeoFencing from 'react-native-geo-fencing';
 
 import { styles } from '../styles/map_parent_style.js';
@@ -73,9 +73,11 @@ export default class MapParent extends Component {
   handleWatchSubmit() {
     let geoFences = [];
     this.state.polygons.forEach(polygon => {
-      const fencePolygon = polygon.coordinates.map( coord => {
+      let fencePolygon = polygon.coordinates.map( coord => {
         return({ lat: coord.latitude, lng: coord.longitude })
       })
+      const first = this.state.polygons[0].coordinates[0];
+      fencePolygon.push({lat: first.latitude, lng: first.longitude});
       geoFences.push(fencePolygon);
     })
     this.setState({ geoFences })
@@ -114,6 +116,16 @@ export default class MapParent extends Component {
   }
 
   render() {
+    if (this.state.geoFences[0]) {
+      console.log(GeoFencing);
+      console.log('this should say true if you made a polygon around treasure island');
+      console.log(this.state.geoFences[0]);
+      let point = {lat: 37.825167, lng: -122.373791};
+      debugger
+      console.log(GeoFencing);
+      GeoFencing.containsLocation(point, this.state.geoFences[0]).then(() => console.log(true)).catch(() => console.log(false));
+    }
+
     if (Object.keys(this.state.map.position).length > 0) {
       return(
         <View style={styles.container}>
@@ -128,7 +140,8 @@ export default class MapParent extends Component {
             region={this.state.region}
             editing={this.state.editing}
             />
-          <TrackFrom />
+          <TrackForm
+            handleWatchSubmit={this.handleWatchSubmit}/>
         </View>
       );
     } else {
