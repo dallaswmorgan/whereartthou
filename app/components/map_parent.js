@@ -91,6 +91,25 @@ export default class MapParent extends Component {
     });
   }
 
+  containsLocation(point, polygon) {
+    // ray-casting algorithm based on
+    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+    let x = point['lat'], y = point['lng'];
+
+    let inside = false;
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+        let xi = polygon[i]['lat'], yi = polygon[i]['lng'];
+        let xj = polygon[j]['lat'], yj = polygon[j]['lng'];
+
+        let intersect = ((yi > y) != (yj > y))
+            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+
+    return inside;
+};
+
   onPress(e) {
     const editing = this.state.editing;
     let coordinate = e.nativeEvent.coordinate;
@@ -119,11 +138,11 @@ export default class MapParent extends Component {
     if (this.state.geoFences[0]) {
       console.log(GeoFencing);
       console.log('this should say true if you made a polygon around treasure island');
-      console.log(this.state.geoFences[0]);
       let point = {lat: 37.825167, lng: -122.373791};
+      console.log(this.containsLocation(point, this.state.geoFences[0]));
+      console.log(this.state.geoFences[0]);
       debugger
       console.log(GeoFencing);
-      GeoFencing.containsLocation(point, this.state.geoFences[0]).then(() => console.log(true)).catch(() => console.log(false));
     }
 
     if (Object.keys(this.state.map.position).length > 0) {
