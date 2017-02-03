@@ -13,12 +13,13 @@ export default class TrackForm extends Component {
   }
 
   render() {
+    const onPress = this.props.submittable() ? () => this.props.handleWatchSubmit() : null;
     return(
       <View style={styles.container}>
         <TouchableHighlight
-          underlayColor='white'
-          onPress={() => this.props.handleWatchSubmit()}>
-          <Text style={styles.trackButton}>
+          underlayColor='transparent'
+          onPress={onPress}>
+          <Text style={this.props.submittable() ? styles.submitTrackButton : styles.trackButton}>
             Start Tracking
           </Text>
         </TouchableHighlight>

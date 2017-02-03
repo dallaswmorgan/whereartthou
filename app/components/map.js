@@ -51,6 +51,9 @@ class PolygonCreator extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Text style={styles.label}>
+          Place points on map to create desired zone
+        </Text>
         <MapView
           provider={this.props.provider}
           style={styles.map}
@@ -58,7 +61,7 @@ class PolygonCreator extends React.Component {
           initialRegion={this.region}
           onPress={e => this.props.onPress(e)}
           {...mapOptions}
-        >
+          >
           {this.polygons.map(polygon => (
             <MapView.Polygon
               key={polygon.id}
@@ -66,7 +69,7 @@ class PolygonCreator extends React.Component {
               strokeColor="#F00"
               fillColor="rgba(255,0,0,0.5)"
               strokeWidth={1}
-            />
+              />
           ))}
           {this.editing && (
             <MapView.Polygon
@@ -75,7 +78,7 @@ class PolygonCreator extends React.Component {
               strokeColor="#000"
               fillColor="rgba(255,0,0,0.5)"
               strokeWidth={1}
-            />
+              />
           )}
         </MapView>
         <View style={styles.buttonContainer}>
@@ -83,7 +86,7 @@ class PolygonCreator extends React.Component {
             <TouchableOpacity
               onPress={() => this.props.finish()}
               style={[styles.bubble, styles.button]}
-            >
+              >
               <Text>Finish</Text>
             </TouchableOpacity>
           )}
