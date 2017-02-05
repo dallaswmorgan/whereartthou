@@ -27,7 +27,9 @@ export default class MapParent extends Component {
       },
       polygons: [],
       editing: null,
-      geoFences: []
+      geoFences: [],
+      prevPosition: {},
+      currentPosition: {}
     };
     this.switchAlert = this.switchAlert.bind(this);
     this.switchOnEnter = this.switchOnEnter.bind(this);
@@ -36,6 +38,8 @@ export default class MapParent extends Component {
     this.onPress = this.onPress.bind(this);
     this.handleWatchSubmit = this.handleWatchSubmit.bind(this);
     this.submittable = this.submittable.bind(this);
+    this.cancel = this.cancel.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
 
@@ -50,7 +54,14 @@ export default class MapParent extends Component {
       },
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-     );
+    );
+    this.watchID = navigator.geolocation.watchPosition((currentPosition) => {
+      this.setState({
+                      prevPosition: this.state.currentPosition,
+                      currentPosition: { lat: currentPosition.coords.latitude,
+                                         lng: currentPosition.coords.longitude }
+                   });
+    });
    }
 
   switchAlert(){
@@ -106,6 +117,16 @@ export default class MapParent extends Component {
     });
   }
 
+  cancel() {
+    this.setState({
+      editing: null
+    })
+  }
+
+  remove(id) {
+    console.log('poopdick');
+  }
+
   containsLocation(point, polygon) {
     // ray-casting algorithm based on
     // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
@@ -159,8 +180,20 @@ export default class MapParent extends Component {
 
   render() {
     if (this.state.geoFences[0]) {
-      let point = {lat: 37.825167, lng: -122.373791};
-      console.log(this.containsLocation(point, this.state.geoFences[0]));
+      let fence = this.state.geoFences[0];
+      let prevPoint = this.state.prevPosition;
+      let currentPoint = this.state.currentPosition;
+      if (this.containsLocation(currentPoint, fence) &&
+          !this.containsLocation(prevPoint, fence) &&
+          this.state.form.onEnter) {
+            Alert.alert('You have ENTERED a fence');
+      }
+      if (this.containsLocation(prevPoint, fence) &&
+            !this.containsLocation(currentPoint, fence) &&
+            this.state.form.onExit) {
+          Alert.alert('You have EXITED a fence')
+      }
+
     }
 
     if (Object.keys(this.state.map.position).length > 0) {
@@ -178,6 +211,8 @@ export default class MapParent extends Component {
               polygons={this.state.polygons}
               region={this.state.region}
               editing={this.state.editing}
+              cancel={this.cancel}
+              remove={this.remove}
             />
           <TrackForm style={styles.contents}
               handleWatchSubmit={this.handleWatchSubmit}
