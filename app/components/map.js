@@ -5,7 +5,8 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  Alert
 } from 'react-native';
 
 import MapView from 'react-native-maps';
@@ -52,13 +53,13 @@ class PolygonCreator extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.label}>
-          Place points on map to create desired zone
+          Place points on map to create desired fence
         </Text>
         <MapView
-          provider={this.props.provider}
           style={styles.map}
           mapType={MapView.MAP_TYPES.HYBRID}
           initialRegion={this.region}
+          showsUserLocation = {true}
           onPress={e => this.props.onPress(e)}
           {...mapOptions}
           >
@@ -69,6 +70,7 @@ class PolygonCreator extends React.Component {
               strokeColor="#F00"
               fillColor="rgba(255,0,0,0.5)"
               strokeWidth={1}
+              onPress={() => this.props.remove(polygon.id)}
               />
           ))}
           {this.editing && (
@@ -88,6 +90,16 @@ class PolygonCreator extends React.Component {
               style={[styles.bubble, styles.button]}
               >
               <Text>Finish</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={styles.cancelButton}>
+          {this.editing && (
+            <TouchableOpacity
+              onPress={() => this.props.cancel()}
+              style={[styles.bubble, styles.button]}
+              >
+              <Text>Cancel</Text>
             </TouchableOpacity>
           )}
         </View>

@@ -12,13 +12,14 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     marginLeft: 15,
-    marginTop: 200,
+    marginTop: 175,
   },
   label: {
     position: 'absolute',
     top: 15,
     color: 'white',
     fontSize: 14,
+    left: 23,
     fontWeight: 'bold',
     textShadowColor: 'black',
     textShadowOffset: {width: 2, height: 2}
@@ -53,5 +54,10 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     top: 70,
     backgroundColor: 'transparent',
+  },
+  cancelButton : {
+    position: "absolute",
+    left: 80,
+    top: 70
   }
 });
