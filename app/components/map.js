@@ -70,7 +70,6 @@ class PolygonCreator extends React.Component {
               strokeColor="#F00"
               fillColor="rgba(255,0,0,0.5)"
               strokeWidth={1}
-              onPress={() => this.props.remove(polygon.id)}
               />
           ))}
           {this.editing && (
