@@ -39,7 +39,6 @@ export default class MapParent extends Component {
     this.handleWatchSubmit = this.handleWatchSubmit.bind(this);
     this.submittable = this.submittable.bind(this);
     this.cancel = this.cancel.bind(this);
-    this.remove = this.remove.bind(this);
   }
 
 
