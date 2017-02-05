@@ -123,10 +123,6 @@ export default class MapParent extends Component {
     })
   }
 
-  remove(id) {
-    console.log('poopdick');
-  }
-
   containsLocation(point, polygon) {
     // ray-casting algorithm based on
     // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
@@ -212,7 +208,6 @@ export default class MapParent extends Component {
               region={this.state.region}
               editing={this.state.editing}
               cancel={this.cancel}
-              remove={this.remove}
             />
           <TrackForm style={styles.contents}
               handleWatchSubmit={this.handleWatchSubmit}
