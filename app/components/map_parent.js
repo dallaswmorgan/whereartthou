@@ -30,6 +30,7 @@ export default class MapParent extends Component {
       geoFences: [],
       prevPosition: {},
       currentPosition: {}
+
     };
     this.switchAlert = this.switchAlert.bind(this);
     this.switchOnEnter = this.switchOnEnter.bind(this);
@@ -54,6 +55,7 @@ export default class MapParent extends Component {
       },
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+
     );
     this.watchID = navigator.geolocation.watchPosition((currentPosition) => {
       this.setState({
@@ -179,6 +181,8 @@ export default class MapParent extends Component {
   }
 
   render() {
+
+
     if (this.state.geoFences[0]) {
       let fence = this.state.geoFences[0];
       let prevPoint = this.state.prevPosition;
@@ -195,7 +199,6 @@ export default class MapParent extends Component {
       }
 
     }
-
     if (Object.keys(this.state.map.position).length > 0) {
       return(
         <View style={styles.container}>
@@ -204,6 +207,7 @@ export default class MapParent extends Component {
                 switchOnExit={this.switchOnExit}
                 state={this.state}
             />
+ 
           <Map style={styles.contents}
               finish={this.finish}
               onPress={this.onPress}

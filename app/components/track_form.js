@@ -23,6 +23,9 @@ export default class TrackForm extends Component {
             Start Tracking
           </Text>
         </TouchableHighlight>
+        <Text style={styles.trackButton}>
+          {this.props.lastPosition}
+        </Text>
       </View>
     );
   }
