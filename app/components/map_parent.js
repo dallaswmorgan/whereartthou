@@ -40,7 +40,6 @@ export default class MapParent extends Component {
     this.handleWatchSubmit = this.handleWatchSubmit.bind(this);
     this.submittable = this.submittable.bind(this);
     this.cancel = this.cancel.bind(this);
-    this.remove = this.remove.bind(this);
   }
 
 
@@ -123,10 +122,6 @@ export default class MapParent extends Component {
     this.setState({
       editing: null
     })
-  }
-
-  remove(id) {
-    console.log('poopdick');
   }
 
   containsLocation(point, polygon) {
@@ -215,7 +210,6 @@ export default class MapParent extends Component {
               region={this.state.region}
               editing={this.state.editing}
               cancel={this.cancel}
-              remove={this.remove}
             />
           <TrackForm style={styles.contents}
               handleWatchSubmit={this.handleWatchSubmit}
