@@ -33,8 +33,6 @@ this.watchID = navigator.geolocation.watchPosition((currentPosition) => {
 });
 ```
 
-**pic of notification asking to use location services**
-
 It then displays the embedded google map, localized on the user's current location
 
 ```js
