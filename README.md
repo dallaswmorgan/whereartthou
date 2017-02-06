@@ -1,72 +1,91 @@
-### Where art thou?
+### Where on Earth?
+Where on Earth is a geofencing app built for iOS using React Native. It allows users to create custom "geofences", or regions on a map, and receive alerts when they enter or exit these geofences.
 
-#### Background
+Designed to work even in the absence of cell service, this app is useful for campers wanting to know when they are getting close to their campsite, hunters who risk fines for hunting outside of designated areas, or any outdoors enthusiast who could use a better sense of where they are in the backcountry.
 
-Geolocation is a powerfully communicative tool, especially in the mobile market
-where users often find themselves in unfamiliar locales with only their mobile device
-to clarify where they are. This app seeks to utilize geo-location based functionality
-by giving mobile users an easy way to share their location with others on request.
+#### Features and Implementation
+Where on Earth integrates the native geolocation API to keep constant tabs on the user's location.
 
+```js
+navigator.geolocation.getCurrentPosition(
+  (position) => {
+    this.setState({
+      map: {
+        position
+      },
+    });
+  },
+  (error) => alert(error.message),
+  {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
 
-#### Functionality & MVP
+);
+this.watchID = navigator.geolocation.watchPosition((currentPosition) => {
+  this.setState({
+                  prevPosition: this.state.currentPosition,
+                  currentPosition: { lat: currentPosition.coords.latitude,
+                                     lng: currentPosition.coords.longitude }
+               });
+});
+```
 
-With this app, users will be able to:
+**pic of notification asking to use location services**
 
-- [ ] Use geolocation to pinpoint exactly where the user is
-- [ ] Allow user to send out request for position of another user via text
-- [ ] Be able to send text message response with location to requesting user
-- [ ] Mobile friendly with UI/UX in mind
+It then displays the embedded google map, localized on the user's current location
 
-Wireframe
+```js
+<MapView
+  style={styles.map}
+  mapType={MapView.MAP_TYPES.HYBRID}
+  initialRegion={this.region}
+  showsUserLocation = {true}
+  onPress={e => this.props.onPress(e)}
+  {...mapOptions}
+  >
+```
+**pic of map page without polygons**
 
-![homepage](./where.png)
+The map allows for intuitive creation of complex polygons representing the bounds of a geofence. It allows for the creation of unlimited distinct geofences.
 
-#### Technologies & Technical Challenges
-This app will be implemented using JavaScript and React Native.  In addition to the webpack.config.js and package.json files, there will be one script:
+**pic of map page with polygons**
 
-- app.js : will contain the rerendering of requests and emergency contacts
+It stores the lat/lng inputs from the user in a geofences slice of state, then runs a customized ray-casting algorithm every time the user's location changes in order to determine if their current location falls within any of the fences they created, then alerts the user based on preferences they set.
 
-The primary technical challenges will be:
+```js
+containsLocation(point, polygon) {
+  let x = point['lat'], y = point['lng'];
 
-- Learning React Native
-- Implementing the geolocation API
-- Converting response to text message
+  let inside = false;
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+      let xi = polygon[i]['lat'], yi = polygon[i]['lng'];
+      let xj = polygon[j]['lat'], yj = polygon[j]['lng'];
 
-#### Group Members & Work Breakdown
-Our group consists of two members, Scott Mosher and Dallas Morgan.
+      let intersect = ((yi > y) != (yj > y))
+          && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+      if (intersect) inside = !inside;
+  }
 
-Scott's primary responsibilities will be:
-- research react native components
-- learn the integration of text API
-- frontend styling
+  return inside;
+};
+```
 
-Dallas' primary responsibilities will be:
-- setting up backend for users and sessions
-- integration of geolocation API
-- coordinating AJAX requests to server
+```js
+this.state.geoFences.forEach(fence => {
+  let prevPoint = this.state.prevPosition;
+  let currentPoint = this.state.currentPosition;
+  if (this.containsLocation(currentPoint, fence) &&
+      !this.containsLocation(prevPoint, fence) &&
+      this.state.form.onEnter) {
+        Alert.alert('You have ENTERED a fence');
+  }
+  if (this.containsLocation(prevPoint, fence) &&
+      !this.containsLocation(currentPoint, fence) &&
+      this.state.form.onExit) {
+        Alert.alert('You have EXITED a fence')
+  }
+})
+```
 
-#### Implementation Timeline
-###### Day 1: Get started learning the basics of React Native and how it interacts with the backend
-- setup package.json
-- setup rails backend
+**pic of alert**
 
-###### Day 2: Work on integrating geolocation and research text API
-- begin basic views for React Native
-- get location to pop up on the views
-
-###### Day 3: Work on sending out requests to other users
-- get requests to specific users
-- be able to respond with location
-
-###### Day 4: Work on integrating text API
-- be able to respond and request with text messages
-- begin styling
-
-###### Day 5: Style and test for bugs
-- finish view styling
-- ensure smooth usability
-
-#### Future Plans
-- Implement yelp API for more detailed responses
-- Allow user to turn on location sharing
-- Implement panic button
+#### Future Development
+blahblahblah

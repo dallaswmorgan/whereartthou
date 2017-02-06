@@ -30,6 +30,7 @@ export default class MapParent extends Component {
       geoFences: [],
       prevPosition: {},
       currentPosition: {}
+
     };
     this.switchAlert = this.switchAlert.bind(this);
     this.switchOnEnter = this.switchOnEnter.bind(this);
@@ -53,6 +54,7 @@ export default class MapParent extends Component {
       },
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+
     );
     this.watchID = navigator.geolocation.watchPosition((currentPosition) => {
       this.setState({
@@ -100,7 +102,7 @@ export default class MapParent extends Component {
         let fencePolygon = polygon.coordinates.map( coord => {
           return({ lat: coord.latitude, lng: coord.longitude })
         })
-        const first = this.state.polygons[0].coordinates[0];
+        const first = polygon.coordinates[0];
         fencePolygon.push({lat: first.latitude, lng: first.longitude});
         geoFences.push(fencePolygon);
       })
@@ -174,8 +176,9 @@ export default class MapParent extends Component {
   }
 
   render() {
-    if (this.state.geoFences[0]) {
-      let fence = this.state.geoFences[0];
+
+
+    this.state.geoFences.forEach(fence => {
       let prevPoint = this.state.prevPosition;
       let currentPoint = this.state.currentPosition;
       if (this.containsLocation(currentPoint, fence) &&
@@ -189,8 +192,7 @@ export default class MapParent extends Component {
           Alert.alert('You have EXITED a fence')
       }
 
-    }
-
+    })
     if (Object.keys(this.state.map.position).length > 0) {
       return(
         <View style={styles.container}>
@@ -199,6 +201,7 @@ export default class MapParent extends Component {
                 switchOnExit={this.switchOnExit}
                 state={this.state}
             />
+
           <Map style={styles.contents}
               finish={this.finish}
               onPress={this.onPress}
