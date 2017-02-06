@@ -98,4 +98,7 @@ this.state.geoFences.forEach(fence => {
 
 #### Future Development
 Where on Earth has many plans for the future including:
-- 
+- Allow parents or guardians to set boundaries for others
+- Send automated text when specified user has exited or entered desired location
+- Enable a panic button to automatically send location to a predetermined list of contacts
+- Create backend to store frequently used polygons
