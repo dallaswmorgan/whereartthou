@@ -3,8 +3,13 @@ Where on Earth is a geofencing app built for iOS using React Native. It allows u
 
 Designed to work even in the absence of cell service, this app is useful for campers wanting to know when they are getting close to their campsite, hunters who risk fines for hunting outside of designated areas, or any outdoors enthusiast who could use a better sense of where they are in the backcountry.
 
+![Splash page](./images/splash.png)
+
 #### Features and Implementation
-Where on Earth integrates the native geolocation API to keep constant tabs on the user's location.
+
+###### Geolocation API
+
+Where on Earth integrates the native geolocation API to keep the user's location accurate in real time.
 
 ```js
 navigator.geolocation.getCurrentPosition(
@@ -28,8 +33,6 @@ this.watchID = navigator.geolocation.watchPosition((currentPosition) => {
 });
 ```
 
-**pic of notification asking to use location services**
-
 It then displays the embedded google map, localized on the user's current location
 
 ```js
@@ -42,11 +45,15 @@ It then displays the embedded google map, localized on the user's current locati
   {...mapOptions}
   >
 ```
-**pic of map page without polygons**
+![Map without polygons](./images/map.png)
+
+###### Complex Polygons
 
 The map allows for intuitive creation of complex polygons representing the bounds of a geofence. It allows for the creation of unlimited distinct geofences.
 
-**pic of map page with polygons**
+![Map with polygons](./images/polygons.png)
+
+###### Alert
 
 It stores the lat/lng inputs from the user in a geofences slice of state, then runs a customized ray-casting algorithm every time the user's location changes in order to determine if their current location falls within any of the fences they created, then alerts the user based on preferences they set.
 
@@ -85,7 +92,11 @@ this.state.geoFences.forEach(fence => {
 })
 ```
 
-**pic of alert**
+![Picture with alert](./images/alert.png)
 
 #### Future Development
-blahblahblah
+Where on Earth has many plans for the future including:
+- Allow parents or guardians to set boundaries for others
+- Send automated text when specified user has exited or entered desired location
+- Enable a panic button to automatically send location to a predetermined list of contacts
+- Create backend to store frequently used polygons
