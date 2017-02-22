@@ -55,7 +55,7 @@ The map allows for intuitive creation of complex polygons representing the bound
 
 ###### Alert
 
-It stores the lat/lng inputs from the user in a geofences slice of state, then runs a customized ray-casting algorithm every time the user's location changes in order to determine if their current location falls within any of the fences they created, then alerts the user based on preferences they set.
+It stores the lat/lng inputs from the user in a geofences slice of state, then runs a customized ray-casting algorithm every time the user's location changes in order to determine if their current location falls within any of the fences they created, then alerts the user based on preferences they set. 
 
 ```js
 containsLocation(point, polygon) {
